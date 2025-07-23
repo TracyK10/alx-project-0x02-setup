@@ -1,4 +1,3 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
 import UserCard from '@/components/common/UserCard';
@@ -53,7 +52,7 @@ const UsersPage = ({ users, error }: UsersPageProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export async function getStaticProps() {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     if (!response.ok) {
