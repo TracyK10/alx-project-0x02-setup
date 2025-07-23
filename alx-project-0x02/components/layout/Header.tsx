@@ -1,65 +1,91 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FiSearch, FiGlobe, FiMenu, FiUser } from 'react-icons/fi';
+import { FiMenu } from 'react-icons/fi';
 
 const Header = () => {
+  const router = useRouter();
+
+  // Helper function to determine if a link is active
+  const isActive = (path: string) => {
+    return router.pathname === path ? 'text-rose-500' : 'text-gray-700 hover:text-rose-500';
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-rose-500">airbnb</span>
+            <span className="text-2xl font-bold text-rose-500">Airbnb</span>
           </Link>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-6 ml-8">
-            <Link href="/home" className={`font-medium ${useRouter().pathname === '/home' ? 'text-rose-500' : 'text-gray-700 hover:text-rose-500'}`}>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link 
+              href="/home" 
+              className={`font-medium transition-colors ${isActive('/home')}`}
+            >
               Home
             </Link>
-            <Link href="/about" className={`font-medium ${useRouter().pathname === '/about' ? 'text-rose-500' : 'text-gray-700 hover:text-rose-500'}`}>
+            <Link 
+              href="/about" 
+              className={`font-medium transition-colors ${isActive('/about')}`}
+            >
               About
+            </Link>
+            <Link 
+              href="/posts" 
+              className={`font-medium transition-colors ${isActive('/posts')}`}
+            >
+              Posts
             </Link>
           </nav>
 
-          {/* Search Bar */}
-          <div className="hidden md:flex items-center justify-between border border-gray-300 rounded-full py-2 px-4 shadow-sm hover:shadow-md transition-shadow duration-200">
-            <button className="font-medium px-4">Anywhere</button>
-            <span className="h-6 border-l border-gray-300"></span>
-            <button className="font-medium px-4">Any week</button>
-            <span className="h-6 border-l border-gray-300"></span>
-            <button className="text-gray-500 pl-4 pr-2">Add guests</button>
-            <button className="bg-rose-500 text-white p-2 rounded-full">
-              <FiSearch className="h-4 w-4" />
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button 
+              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              <FiMenu className="h-6 w-6" />
             </button>
           </div>
-
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
-            <button className="hidden md:block text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition-colors">
+          <div className="hidden md:flex items-center space-x-4">
+            <button className="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition-colors">
               Become a Host
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <FiGlobe className="h-5 w-5" />
-            </button>
-            <div className="flex items-center space-x-2 border border-gray-300 rounded-full p-2 hover:shadow-md transition-shadow cursor-pointer">
-              <FiMenu className="h-5 w-5" />
-              <div className="h-8 w-8 bg-gray-500 rounded-full flex items-center justify-center text-white">
-                <FiUser className="h-5 w-5" />
-              </div>
+            <div className="flex items-center space-x-2 border border-gray-300 rounded-full p-2 cursor-pointer hover:shadow-md transition-shadow">
+              <div className="w-8 h-8 bg-gray-500 rounded-full"></div>
             </div>
           </div>
         </div>
 
-        {/* Mobile Search */}
-        <div className="mt-4 md:hidden">
-          <div className="flex items-center border border-gray-300 rounded-full p-2 shadow-sm">
-            <FiSearch className="h-4 w-4 ml-2 text-gray-500" />
-            <input
-              type="text"
-              placeholder="Where to?"
-              className="ml-2 w-full outline-none bg-transparent text-sm"
-            />
+        {/* Mobile Navigation */}
+        <div className="md:hidden">
+          <div className="pt-2 pb-3 space-y-1">
+            <Link 
+              href="/home" 
+              className={`block px-3 py-2 rounded-md text-base font-medium ${isActive('/home')} hover:bg-gray-50`}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/about" 
+              className={`block px-3 py-2 rounded-md text-base font-medium ${isActive('/about')} hover:bg-gray-50`}
+            >
+              About
+            </Link>
+            <Link 
+              href="/posts" 
+              className={`block px-3 py-2 rounded-md text-base font-medium ${isActive('/posts')} hover:bg-gray-50`}
+            >
+              Posts
+            </Link>
+            <div className="border-t border-gray-200 my-2"></div>
+            <button className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">
+              Become a Host
+            </button>
           </div>
         </div>
       </div>
