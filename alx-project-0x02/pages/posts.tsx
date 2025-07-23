@@ -1,56 +1,21 @@
-import { useState, useEffect } from 'react';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
 import PostCard from '@/components/common/PostCard';
 import { type PostProps } from '@/interfaces';
 
-const PostsPage = () => {
-  const [posts, setPosts] = useState<PostProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface PostsPageProps {
+  posts: PostProps[];
+  error?: string;
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data = await response.json();
-        setPosts(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading posts...</p>
-        </div>
-      </div>
-    );
-  }
-
+const PostsPage = ({ posts, error }: PostsPageProps) => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center p-6 bg-red-50 rounded-lg max-w-md">
           <p className="text-red-600 font-medium">Error loading posts</p>
           <p className="text-gray-600 mt-2">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors"
-          >
-            Try Again
-          </button>
         </div>
       </div>
     );
@@ -86,6 +51,33 @@ const PostsPage = () => {
       </main>
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    if (!response.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+    const posts = await response.json();
+    
+    return {
+      props: {
+        posts: posts.slice(0, 12), // Limit to 12 posts for better performance
+      },
+      // Re-generate the page at most once every 10 seconds
+      revalidate: 10,
+    };
+  } catch (error) {
+    return {
+      props: {
+        posts: [],
+        error: error instanceof Error ? error.message : 'An error occurred',
+      },
+      // Re-generate the page after 10 seconds if there was an error
+      revalidate: 10,
+    };
+  }
 };
 
 export default PostsPage;
