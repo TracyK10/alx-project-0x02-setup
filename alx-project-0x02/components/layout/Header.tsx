@@ -39,6 +39,12 @@ const Header = () => {
             >
               Posts
             </Link>
+            <Link 
+              href="/users" 
+              className={`font-medium transition-colors ${isActive('/users')}`}
+            >
+              Users
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -81,6 +87,12 @@ const Header = () => {
               className={`block px-3 py-2 rounded-md text-base font-medium ${isActive('/posts')} hover:bg-gray-50`}
             >
               Posts
+            </Link>
+            <Link 
+              href="/users" 
+              className={`block px-3 py-2 rounded-md text-base font-medium ${isActive('/users')} hover:bg-gray-50`}
+            >
+              Users
             </Link>
             <div className="border-t border-gray-200 my-2"></div>
             <button className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">
