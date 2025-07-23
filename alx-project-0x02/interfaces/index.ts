@@ -58,3 +58,11 @@ export interface Review {
     avatar: string;
   };
 }
+
+export interface CardProps {
+  title: string;
+  content: string;
+  className?: string;
+  titleClassName?: string;
+  contentClassName?: string;
+}
