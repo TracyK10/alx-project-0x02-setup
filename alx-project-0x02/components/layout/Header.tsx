@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { FiSearch, FiGlobe, FiMenu, FiUser, FiHeart } from 'react-icons/fi';
+import { useRouter } from 'next/router';
+import { FiSearch, FiGlobe, FiMenu, FiUser } from 'react-icons/fi';
 
 const Header = () => {
   return (
@@ -10,6 +11,16 @@ const Header = () => {
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold text-rose-500">airbnb</span>
           </Link>
+
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-6 ml-8">
+            <Link href="/home" className={`font-medium ${useRouter().pathname === '/home' ? 'text-rose-500' : 'text-gray-700 hover:text-rose-500'}`}>
+              Home
+            </Link>
+            <Link href="/about" className={`font-medium ${useRouter().pathname === '/about' ? 'text-rose-500' : 'text-gray-700 hover:text-rose-500'}`}>
+              About
+            </Link>
+          </nav>
 
           {/* Search Bar */}
           <div className="hidden md:flex items-center justify-between border border-gray-300 rounded-full py-2 px-4 shadow-sm hover:shadow-md transition-shadow duration-200">
