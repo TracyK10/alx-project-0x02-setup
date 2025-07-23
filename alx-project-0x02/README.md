@@ -2,7 +2,7 @@
 
 A modern, responsive Airbnb clone built with Next.js, TypeScript, and Tailwind CSS. This project demonstrates various Next.js features including static site generation, API routes, and responsive design.
 
-![Screenshot](/public/assets/images/image.png)
+![Screenshot](/alx-project-0x02/public/assets/images/image.png)
 
 ## Features
 
@@ -30,8 +30,8 @@ A modern, responsive Airbnb clone built with Next.js, TypeScript, and Tailwind C
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/airbnb-clone.git
-   cd airbnb-clone
+   git clone https://github.com/TracyK10/alx-project-0x02-setup.git
+   cd alx-project-0x02
    ```
 
 2. Install dependencies
